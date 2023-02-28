@@ -3,22 +3,31 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Schema;
 use App\Models\userlms;
-use App\Models\course;
-use App\Models\grade;
-use App\Models\grade_section;
+
 
 class UserController extends Controller
 {
-    //get all users
-    public function getUser(Request $request, $id){
-        $user= userlms::find($id)->get();
 
+    //get all users
+    public function getAllUsers(Request $request){
+        $users = userlms::all();
         return response()->json([
-            'message'=> $user,
+            'message' => $users
         ]);
     }
+
+    //get user by id
+    public function getUserById(Request $request, $id){
+        $user = userlms::find($id);
+        return response()->json([
+            'message' => $user
+        ]);
+    }
+    
+    
    
     //add new user(teacher)
     public function addUser(Request $request){
@@ -28,7 +37,7 @@ class UserController extends Controller
         $email=$request->input('email');
         $password=$request->input('password');
         $phoneNumber=$request->input('phoneNumber');
-        $role=json_decode($request->input('role')); //array 
+        $role=$request->input('role');
 
         $user->firstName=$firstName;
         $user->lastName=$lastName;
@@ -43,20 +52,6 @@ class UserController extends Controller
         ]);
     }
 
-     //add new course
-    //  public function addCourse(Request $request){
-    //     $course= new course;
-    //     $subject=$request->input('subject');
-      
-
-    //     $course->subject=$subject;
-    //     $course->save();
-
-    //     return response()->json([
-    //         'message'=>'Course created'
-    //     ]);
-    // }
-
 
     //delete user
     public function deleteUser(Request $request, $id){
@@ -69,15 +64,43 @@ class UserController extends Controller
 
     }
 
-    // update user
     public function updateUser(Request $request, $id){
         $user= userlms::find($id);
-        $user-> update();
-
+        $user->fill($request->only([
+            'firstName',
+            'lastName',
+            'email',
+            'password',
+            'phoneNumber',
+            'role',
+        ]));
+        $user->save();
+    
         return response()->json([
-            'message'=>'DONE! User updated'
+            'message'=>'DONE! User updated',
+            'user'=> $user,
         ]);
+    }
+    
+    
 
+    //get all teachers
+    public function getTeacher(){
+        $role = "teacher";
+        $users = Userlms::where('role', $role)->get();
+        return response()->json(['users' => $users]);
     }
 
+    //get all students
+    public function getStudents(){
+        $role = "student";
+        $users = Userlms::where('role', $role)->get();
+        return response()->json(['users' => $users]);
+    }
+    
+
+    //get user by name
+    public function getUserByName($firstName){
+        return userlms:: where('firstName', 'like', '%' .$firstName.'%')->get();
+    }
 }

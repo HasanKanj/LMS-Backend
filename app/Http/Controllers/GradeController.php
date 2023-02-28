@@ -2,84 +2,84 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Grade;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Schema;
+use App\Models\userlms;
+use App\Models\course;
+use App\Models\grade;
+use App\Models\grade_section;
 
 class GradeController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
+    //get by id
+    public function getGradeById(Request $request, $id){
+        $grade = grade::find($id);
+        if(!$grade){
+            return response()->json(['message'=> 'Grade not found.'],404);
+        }  
+        return response()->json([
+            'message'=> $grade ,
+        ]) ;
+    }
+   
+   
+   
+    //add new user(teacher)
+    public function addGrade(Request $request){
+        $grade= new grade;
+        $name=$request->input('name');
+      
+        $grade->name=$name;
+    
+        $grade->save();
+
+        return response()->json([
+            'message'=>'DONE!',
+            $grade
+        ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+     //add new course
+    //  public function addCourse(Request $request){
+    //     $course= new course;
+    //     $subject=$request->input('subject');
+      
+
+    //     $course->subject=$subject;
+    //     $course->save();
+
+    //     return response()->json([
+    //         'message'=>'Course created'
+    //     ]);
+    // }
+
+
+    //delete user
+    public function deleteGrade(Request $request, $id){
+        $grade= grade::find($id);
+        if(!$grade){
+            return response()->json(['message'=> 'Grade not found.'],404);
+        } 
+        $grade->delete();
+
+        return response()->json([
+            'message'=>'DONE! User deleted'
+        ]);
+
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+    // update user
+    public function updateGrade(Request $request, $id){
+        $grade= grade::find($id);
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Grade  $grade
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Grade $grade)
-    {
-        //
-    }
+        if(! $grade){
+            return response()->json(['message'=> 'Grade not found.'],404);
+        } 
+        $grade->update($request->all());
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Grade  $grade
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Grade $grade)
-    {
-        //
-    }
+        return response()->json([
+            'message'=>'DONE! User updated',
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Grade  $grade
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Grade $grade)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Grade  $grade
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Grade $grade)
-    {
-        //
+        ]);
     }
 }

@@ -3,7 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
-
+use App\Http\Controllers\GradeController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -23,4 +23,15 @@ Route::post('/userteacher',[UserController::class,'addUser']);
 // Route::post('/course',[UserController::class,'addCourse']);
 Route::post('/capacity',[UserController::class,'addCapacity']);
 Route::delete('/userteacher/{id}',[UserController::class,'deleteUser']);
+
+
+
+
+
+
+
+Route::get('/grade/{id}',[GradeController::class,'getGradeById']);
+Route::post('/grade',[GradeController::class,'addGrade']);
+Route::delete('/grade/{id}',[GradeController::class,'deleteGrade']);
+Route::patch('/grade/{id}',[GradeController::class,'updateGrade']);
 

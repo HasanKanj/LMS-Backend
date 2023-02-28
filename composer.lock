@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3974edc468eeb01427abebc8e05619d4",
+    "content-hash": "7370c5db84f5618c5cb7cfa1a4879d67",
     "packages": [
         {
             "name": "ajcastro/eager-load-pivot-relations",
@@ -8177,7 +8177,9 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": [],
+    "stability-flags": {
+        "tymon/jwt-auth": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {

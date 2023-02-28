@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\GradeController;
+use App\Http\Controllers\GradeSectionController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -34,4 +35,11 @@ Route::get('/grade/{id}',[GradeController::class,'getGradeById']);
 Route::post('/grade',[GradeController::class,'addGrade']);
 Route::delete('/grade/{id}',[GradeController::class,'deleteGrade']);
 Route::patch('/grade/{id}',[GradeController::class,'updateGrade']);
+
+
+
+Route::get('/gradeSection/{id}',[GradeSectionController::class,'getGradeSectionById']);
+Route::post('/gradeSection',[GradeSectionController::class,'addGradeSection']);
+Route::delete('/gradeSection/{id}',[GradeSectionController::class,'deleteGradeSection']);
+Route::patch('/gradeSection/{id}',[GradeSectionController::class,'updateGradeSection']);
 

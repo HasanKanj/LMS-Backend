@@ -22,6 +22,17 @@ class GradeController extends Controller
         ]) ;
     }
    
+     //get by id
+     public function getGrade(Request $request){
+        $grade = grade::find();
+        if(!$grade){
+            return response()->json(['message'=> 'Grade not found.'],404);
+        }  
+        return response()->json([
+            'message'=> $grade ,
+        ]) ;
+    }
+   
    
    
     //add new user(teacher)
@@ -34,8 +45,8 @@ class GradeController extends Controller
         $grade->save();
 
         return response()->json([
-            'message'=>'DONE!',
-            $grade
+            'message'=>$grade
+          
         ]);
     }
 

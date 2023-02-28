@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\AttendanceController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,3 +25,7 @@ Route::post('/userteacher',[UserController::class,'addUser']);
 Route::post('/capacity',[UserController::class,'addCapacity']);
 Route::delete('/userteacher/{id}',[UserController::class,'deleteUser']);
 
+/***************** Attendance Route  *************************/
+
+Route::get('/attendance',[AttendanceController::class,'getAll']);
+Route::post('/attendance/create/{id}',[AttendanceController::class,'createAttendance']);

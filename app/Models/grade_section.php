@@ -15,8 +15,10 @@ class grade_section extends Pivot
     protected $fillable = [
         'capacity',
         ];
-
-   
+ 
+        public function attendence(){
+            return $this->hasMany(Attendence::class,'grade_section_id');
+        }
 
 }
 

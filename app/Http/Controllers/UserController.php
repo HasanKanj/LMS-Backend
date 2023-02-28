@@ -28,7 +28,7 @@ class UserController extends Controller
         $email=$request->input('email');
         $password=$request->input('password');
         $phoneNumber=$request->input('phoneNumber');
-        $role=json_decode($request->input('role')); //array 
+        $role=$request->input('role'); 
 
         $user->firstName=$firstName;
         $user->lastName=$lastName;

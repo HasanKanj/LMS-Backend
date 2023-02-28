@@ -14,7 +14,8 @@ class section extends Model
 
     use HasFactory;
 
-    public function grade(){
+    public function grade()
+    {
         return $this->belongsToMany(grade::class, 'grade_sections');
     }
 }

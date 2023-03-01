@@ -36,8 +36,6 @@ Route::get('/attendance/student/{id}',[AttendanceController::class,'getByStudent
 Route::get('/attendance/gradeSection/{id}',[AttendanceController::class,'getByGradeSectionId']);
 
 
-
-
 /*********Course */
 Route::post('/course',[CourseController::class,'createCourse']);
 Route::get('/course/getAll',[CourseController::class,'getAllCourses']);

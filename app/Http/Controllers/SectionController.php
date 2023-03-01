@@ -24,7 +24,7 @@ class SectionController extends Controller
     //get single section
     public function getSingleSection(Request $request, $id)
     {
-        $section = Section::find($id);
+         $section = Section::find($id);
 
         if (!$section) {
             return response()->json(['message' => 'Section not found.'], 404);

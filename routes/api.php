@@ -19,13 +19,11 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/userLMS/{id}',[UserController::class,'getUser']);
-Route::post('/userteacher',[UserController::class,'addUser']);
-// Route::post('/course',[UserController::class,'addCourse']);
-Route::post('/capacity',[UserController::class,'addCapacity']);
-Route::delete('/userteacher/{id}',[UserController::class,'deleteUser']);
-
-/***************** Attendance Route  *************************/
-
-Route::get('/attendance',[AttendanceController::class,'getAll']);
-Route::post('/attendance/create/{id}',[AttendanceController::class,'createAttendance']);
+Route::get('/allUser',[UserController::class,'getAllUsers']);
+Route::get('/user/{id}',[UserController::class,'getUserById']);
+Route::post('/user',[UserController::class,'addUser']);
+Route::put('/user/{id}',[UserController::class,'updateUser']);
+Route::delete('/user/{id}',[UserController::class,'deleteUser']);
+Route::get('/teacher',[UserController::class,'getTeacher']);
+Route::get('/student',[UserController::class,'getStudents']);
+Route::get('/userss/{firstName}',[UserController::class,'getUserByName']);

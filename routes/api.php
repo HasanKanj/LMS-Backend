@@ -18,12 +18,29 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+Route::get('/allUser',[UserController::class,'getAllUsers']);
+Route::get('/user/{id}',[UserController::class,'getUserById']);
+Route::post('/user',[UserController::class,'addUser']);
+Route::put('/user/{id}',[UserController::class,'updateUser']);
+Route::delete('/user/{id}',[UserController::class,'deleteUser']);
+Route::get('/teacher',[UserController::class,'getTeacher']);
+Route::get('/student',[UserController::class,'getStudents']);
+Route::get('/userss/{firstName}',[UserController::class,'getUserByName']);
 
-Route::get('/userLMS/{id}', [UserController::class, 'getUser']);
-Route::post('/userteacher', [UserController::class, 'addUser']);
-// Route::post('/course',[UserController::class,'addCourse']);
-Route::post('/capacity', [UserController::class, 'addCapacity']);
-Route::delete('/userteacher/{id}', [UserController::class, 'deleteUser']);
+
+/**********Attendance */
+Route::post('/attendance/{id}',[AttendanceController::class,'createAttendance']);
+Route::get('/attendance',[AttendanceController::class,'getAll']);
+Route::get('/attendance/student/{id}',[AttendanceController::class,'getByStudent']);
+Route::get('/attendance/gradeSection/{id}',[AttendanceController::class,'getByGradeSectionId']);
+
+
+/*********Course */
+Route::post('/course',[CourseController::class,'createCourse']);
+Route::get('/course/getAll',[CourseController::class,'getAllCourses']);
+Route::get('/course/{id}',[CourseController::class,'getCourse']);
+Route::delete('deleteById/{id}',[CourseController::class,'deleteById']);
+
 
 /*******Section ****/
 Route::Get('/section', [SectionController::class, 'getSection']);

@@ -17,4 +17,9 @@ class attendance extends Model
     public function Student(){
         return $this->belongsTo(userlms::class);
     }
+
+    public function gradeSection(){
+        return $this->belongsTo(grade_section::class);
+    }
+
 }

@@ -25,9 +25,9 @@ Route::post('/userteacher', [UserController::class, 'addUser']);
 Route::post('/capacity', [UserController::class, 'addCapacity']);
 Route::delete('/userteacher/{id}', [UserController::class, 'deleteUser']);
 
-
+/*******Section ****/
 Route::Get('/section', [SectionController::class, 'getSection']);
 Route::Get('/section/{id}', [SectionController::class, 'getSingleSection']);
-Route::Post('/section', [SectionController::class, 'addSection']);
-Route::Patch('/section/{id}', [SectionController::class, 'updateSection']);
+Route::Post('/addsection', [SectionController::class, 'addSection']);
+Route::Patch('/updatesection/{id}', [SectionController::class, 'updateSection']);
 Route::Delete('/section/{id}', [SectionController::class, 'deleteSection']);

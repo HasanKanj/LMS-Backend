@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\attendance;
-use App\Models\UserClassSection;
+use App\Models\UserGradeSection;
 use Illuminate\Support\Facades\Log;
+use Carbon\Carbon;
+use Illuminate\Routing\Controller;
 
 class AttendanceController extends Controller
 {
@@ -13,31 +15,35 @@ class AttendanceController extends Controller
     /*********Create attendance */
     public function createAttendance(Request $request,$id){
         
-        $student=UserClassSection::where('student_id',$id)->first();
-            log::info($student);
+        $student=UserGradeSection::where('student_id',$id)->first();
+        if(! $student){
+            return response()->json([
+                'message'=>'No such student_id',
+                
+            ]);
+    
+        } else{
         $grade_section_id=$student->grade_section_id;
-       
-
+    
         $attendance=new Attendance;
-        $attendance->grade_section_id=$grade_section_id;
-        $attendance->student_id=$id;
+        $attendance->gradeSectionId=$grade_section_id;
+        $attendance->studentId=$id;
         $attendance->status=$request->status;
-        $attendance->date=Carbon::now;
+        $attendance->date=Carbon::now();
 
         $attendance->save();
         return response()->json([
             'message'=>'attendance is created succesfully',
             'data'=>$attendance,
         ]);
-
     }
-
+    }
 
 
 
     /********* Get All Attendance */
     public function getAll(Request $request) {
-        $attendance  = attendance::all();
+        $attendance = attendance::all();
         return response()->json([
             'message'=> "All the attendences",
             'data'=>$attendance, 200
@@ -48,18 +54,19 @@ class AttendanceController extends Controller
     public function getByStudent($id){
         $studentAttendance= attendance::where('studentId','=',$id)->get();
         return response()->json([
-            'message'=>'All the Attendance for students',
-            'data'=>$studentAttendance,200
+            'message'=>'All the Attendance for one student',
+            'data'=>$studentAttendance,200,
         ]);
     }
  
-      /*****Get student's attendance by id  */
+      /*****Get gradeSection's attendance by id  */
     public function getByGradeSectionId($id){
         $gradeSectioId= attendance::where('gradeSectionId','=',$id)->get();
         return response()->json([
-            'message'=>'All the Attendance for students',
+            'message'=>'All the Attendance for GradeSection',
             'data'=>$gradeSectioId,200
         ]);
     }
+    
 
 }

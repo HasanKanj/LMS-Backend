@@ -2,34 +2,51 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Course;
+use App\Models\course;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
 
 class CourseController extends Controller
 {
+
+
+    //Create a course
+    public function createCourse(Request $request)
+    {
+        $request->validate(['subject'=>'required']);
+        return Course::create($request->all());
+    }  
+
+
     //Get all course
-     public function getAll(){
+     public function getAllCourses(){
         return  Course::all();
      }
 
 
-//Create a course
-     public function createCourse(Request $request)
-     {
-         $request->validate(['subject'=>'required']);
-         return Course::create($request->all());
-     }     
+ //Get course by id
+ public function getCourse(request $request,$id){
+    $course=course::find($id);
+    return response()->json([
+     'message' => $course
+    ]);
+    }
+
+   
 
 
 //delete a course by id 
 
      public function deleteById($id)
      {
-     return Course::destroy($id);
+    Course::destroy($id);
+    return response()->json([
+     'message'=>'course is deleted',
+    ]);
+
      }
 
 
-//search by name
 }
 
 

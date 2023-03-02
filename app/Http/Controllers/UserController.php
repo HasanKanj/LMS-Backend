@@ -28,8 +28,6 @@ class UserController extends Controller
         ]);
     }
     
-    
-   
     //add new user(teacher)
     public function addUser(Request $request){
         $user= new userlms;
@@ -58,12 +56,11 @@ class UserController extends Controller
         $user->phoneNumber=$phoneNumber;
         $user->save();
 
-    //    $token=$user->createToken('tokenss')->plainTextToken;
-
+        $token=$user->createToken('tokenss')->plainTextToken;
 
         return response()->json([
             'message'=>'DONE!',
-            //  'token'=>$token,
+             'token'=>$token,
         ]);
     }
 
@@ -86,10 +83,14 @@ class UserController extends Controller
             'firstName',
             'lastName',
             'email',
-            'password',
+            // 'password',
             'phoneNumber',
             'role',
         ]));
+
+        if ($request->has('password')) {
+            $user->password = Hash::make($request->password);
+        }
         $user->save();
     
         return response()->json([

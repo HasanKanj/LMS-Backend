@@ -4,7 +4,8 @@ use App\Http\Controllers\SectionController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\GradeController;
+use App\Http\Controllers\GradeSectionController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -28,6 +29,26 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     });
 
     
+
+
+
+
+
+
+Route::get('/grade/{id}',[GradeController::class,'getGradeById']);
+Route::get('/grade',[GradeController::class,'getGrade']);
+Route::post('/grade',[GradeController::class,'addGrade']);
+Route::delete('/grade/{id}',[GradeController::class,'deleteGrade']);
+Route::put('/grade/{id}',[GradeController::class,'updateGrade']);
+
+
+
+Route::get('/gradeSection/{id}',[GradeSectionController::class,'getGradeSectionById']);
+Route::post('/gradeSection',[GradeSectionController::class,'addGradeSection']);
+Route::delete('/gradeSection/{id}',[GradeSectionController::class,'deleteGradeSection']);
+Route::patch('/gradeSection/{id}',[GradeSectionController::class,'updateGradeSection']);
+
+
 Route::get('/allUser',[UserController::class,'getAllUsers']);
 Route::get('/user/{id}',[UserController::class,'getUserById']);
 

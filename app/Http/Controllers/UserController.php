@@ -18,7 +18,7 @@ class UserController extends Controller
             'message'=> $user,
         ]);
     }
-   
+    
     //add new user(teacher)
     public function addUser(Request $request){
         $user= new userlms;
@@ -37,7 +37,7 @@ class UserController extends Controller
         // $password=$request->input('password');
        $password= Hash::make($request->password);
         $phoneNumber=$request->input('phoneNumber');
-        $role=json_decode($request->input('role')); //array 
+        $role=$request->input('role');
 
         $user->firstName=$firstName;
         $user->lastName=$lastName;
@@ -47,12 +47,11 @@ class UserController extends Controller
         $user->phoneNumber=$phoneNumber;
         $user->save();
 
-    //    $token=$user->createToken('tokenss')->plainTextToken;
-
+        $token=$user->createToken('tokenss')->plainTextToken;
 
         return response()->json([
             'message'=>'DONE!',
-            //  'token'=>$token,
+             'token'=>$token,
         ]);
     }
 
@@ -85,8 +84,20 @@ class UserController extends Controller
     //update user
     public function updateUser(Request $request, $id){
         $user= userlms::find($id);
-        $user-> update();
+        $user->fill($request->only([
+            'firstName',
+            'lastName',
+            'email',
+            // 'password',
+            'phoneNumber',
+            'role',
+        ]));
 
+        if ($request->has('password')) {
+            $user->password = Hash::make($request->password);
+        }
+        $user->save();
+    
         return response()->json([
             'message'=>'DONE! User updated'
         ]);

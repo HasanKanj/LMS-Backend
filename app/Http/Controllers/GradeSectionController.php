@@ -14,13 +14,7 @@ class GradeSectionController extends Controller
     //get all grade_sections
     public function getGradeSections(Request $request, $id)
     {
-        $grade_section = grade_section::all();
-        if (!$grade_section) {
-            return response()->json(['message' => 'grade_section not found.'], 404);
-        }
-        return response()->json([
-            'message' => $grade_section,
-        ]);
+        //
     }
     //get grade_section by id
     public function getGradeSectionById(Request $request, $id)

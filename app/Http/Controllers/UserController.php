@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Schema;
 use App\Models\userlms;
 use Illuminate\Support\Facades\Hash;
@@ -11,20 +10,12 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
-
     //get all users
-    public function getAllUsers(Request $request){
-        $users = userlms::all();
-        return response()->json([
-            'message' => $users
-        ]);
-    }
+    public function getUser(Request $request, $id){
+        $user= userlms::find($id)->get();
 
-    //get user by id
-    public function getUserById(Request $request, $id){
-        $user = userlms::find($id);
         return response()->json([
-            'message' => $user
+            'message'=> $user,
         ]);
     }
     
@@ -46,7 +37,7 @@ class UserController extends Controller
         // $password=$request->input('password');
        $password= Hash::make($request->password);
         $phoneNumber=$request->input('phoneNumber');
-        $role=$request->input('role');
+        $role=json_decode($request->input('role')); //array 
 
         $user->firstName=$firstName;
         $user->lastName=$lastName;
@@ -63,6 +54,20 @@ class UserController extends Controller
              'token'=>$token,
         ]);
     }
+
+     //add new course
+    //  public function addCourse(Request $request){
+    //     $course= new course;
+    //     $subject=$request->input('subject');
+      
+
+    //     $course->subject=$subject;
+    //     $course->save();
+
+    //     return response()->json([
+    //         'message'=>'Course created'
+    //     ]);
+    // }
 
 
     //delete user
@@ -94,25 +99,9 @@ class UserController extends Controller
         $user->save();
     
         return response()->json([
-            'message'=>'DONE! User updated',
-            'user'=> $user,
+            'message'=>'DONE! User updated'
         ]);
-    }
-    
-    
 
-    //get all teachers
-    public function getTeacher(){
-        $role = "teacher";
-        $users = Userlms::where('role', $role)->get();
-        return response()->json(['users' => $users]);
-    }
-
-    //get all students
-    public function getStudents(){
-        $role = "student";
-        $users = Userlms::where('role', $role)->get();
-        return response()->json(['users' => $users]);
     }
     
 

@@ -37,7 +37,7 @@ class UserController extends Controller
         // $password=$request->input('password');
        $password= Hash::make($request->password);
         $phoneNumber=$request->input('phoneNumber');
-        $role=json_decode($request->input('role')); //array 
+        $role=$request->input('role');
 
         $user->firstName=$firstName;
         $user->lastName=$lastName;

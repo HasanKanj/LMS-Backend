@@ -13,6 +13,7 @@ class grade extends Model
         'name',
         
     ];
+    
 
     public function section(){
         return $this->belongsToMany(section::class, 'grade_sections', 'grade_id', 'section_id');

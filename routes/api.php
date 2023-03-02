@@ -32,9 +32,10 @@ Route::delete('/userteacher/{id}',[UserController::class,'deleteUser']);
 
 
 Route::get('/grade/{id}',[GradeController::class,'getGradeById']);
+Route::get('/grade',[GradeController::class,'getGrade']);
 Route::post('/grade',[GradeController::class,'addGrade']);
 Route::delete('/grade/{id}',[GradeController::class,'deleteGrade']);
-Route::patch('/grade/{id}',[GradeController::class,'updateGrade']);
+Route::put('/grade/{id}',[GradeController::class,'updateGrade']);
 
 
 

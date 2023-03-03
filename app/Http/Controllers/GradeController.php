@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Schema;
 use App\Models\userlms;
 use App\Models\course;
 use App\Models\grade;
+use App\Models\section;
 use App\Models\grade_section;
 
 class GradeController extends Controller
@@ -18,22 +19,25 @@ class GradeController extends Controller
         if (!$grade) {
             return response()->json(['message' => 'Grade not found.'], 404);
         }
-        return response()->json([
-            'message' => $grade,
-        ]);
+        return grade::with('sections')->find($id);
     }
 
     //get all grades
-    public function getGrade(Request $request)
+    public function getGrade($sectionId = null)
     {
         $grades = grade::all();
 
         if (!$grades) {
             return response()->json(['message' => 'Grade not found.'], 404);
         }
-        return response()->json([
-            'message' => $grades,
-        ]);
+        
+
+        if ($sectionId) {
+            $grades = section::findOrFail($sectionId)->grades()->with('sections')->get();
+        } else {
+            $grades = grade::with('sections')->get();
+        }
+        return $grades;
     }
 
 
@@ -41,32 +45,20 @@ class GradeController extends Controller
     //add new grade
     public function addGrade(Request $request)
     {
-        $grade = new grade;
-        $name = $request->input('name');
-
-        $grade->name = $name;
-
-        $grade->save();
-
-        return response()->json([
-            'message' => $grade
-
+        
+        $request->validate([
+            'name' => 'required',
+            'sectionIds' => 'array', // Ensure section IDs are provided in an array format
+            'sectionIds.*' => 'exists:sections,id', // Ensure each section ID exists in the sections table
+            'capacity' => 'integer|nullable', // Add a capacity field that is optional and must be an integer
         ]);
+
+        $grade = grade::create($request->only('name')); // Create the new level using only the levelName field from the request
+
+        $grade->sections()->attach($request->input('sectionIds'), ['capacity' => $request->input('capacity')]); // Associate the sections with the new level using the attach method, with the capacity field set to the provided value
+
+        return $grade;
     }
-
-    //add new course
-    //  public function addCourse(Request $request){
-    //     $course= new course;
-    //     $subject=$request->input('subject');
-
-
-    //     $course->subject=$subject;
-    //     $course->save();
-
-    //     return response()->json([
-    //         'message'=>'Course created'
-    //     ]);
-    // }
 
 
     //delete grade

@@ -11,6 +11,7 @@ class grade_section extends Pivot
 {
 
     use EagerLoadPivotTrait;
+    protected $table= 'grade_sections';
 
     protected $fillable = [
         'capacity',
@@ -21,6 +22,10 @@ class grade_section extends Pivot
            }
            public function userGradeSection(){
          $this->hasMany(UserGradeSection::class ,'grade_sections_id');
+        }
+
+        public function section(){
+            return $this-> belongsToMany(section::class);
         }
 
 }

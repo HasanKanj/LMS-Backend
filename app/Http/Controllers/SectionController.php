@@ -15,7 +15,6 @@ class SectionController extends Controller
         if (!$sections) {
             return response()->json(['message' => 'No sections found.'], 404);
         }
-
         return response()->json([
             'All Sections' => $sections,
         ]);

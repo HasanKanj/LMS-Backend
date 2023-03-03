@@ -5,19 +5,30 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Schema;
 use App\Models\userlms;
+use App\Models\grade;
+use App\Models\section;
+use App\Models\UserGradeSection;
+use App\Models\course;
 use Illuminate\Support\Facades\Hash;
 
 
 class UserController extends Controller
 {
     //get all users
-    public function getUser(Request $request, $id){
-        $user= userlms::find($id)->get();
-
+    public function getAllUsers(Request $request){
+        $users = userlms::all();
         return response()->json([
-            'message'=> $user,
+            'message' => $users
         ]);
     }
+
+    //get user by ID
+        public function getUserById(Request $request, $id){
+            $user = userlms::find($id);
+            return response()->json([
+                'message'=> $user,
+            ]);
+        }
     
     //add new user(teacher)
     public function addUser(Request $request){
@@ -34,8 +45,7 @@ class UserController extends Controller
         $firstName=$request->input('firstName');
         $lastName=$request->input('lastName');
         $email=$request->input('email');
-        // $password=$request->input('password');
-       $password= Hash::make($request->password);
+        $password= Hash::make($request->password);
         $phoneNumber=$request->input('phoneNumber');
         $role=$request->input('role');
 
@@ -47,27 +57,45 @@ class UserController extends Controller
         $user->phoneNumber=$phoneNumber;
         $user->save();
 
+////////////////////////////////////////////////////////////////////////////////////////
+        $name= $request->input('name');
+        $letter= $request->input('letter');
+
+        $grade= grade::where('name', $name)->first();
+        $section= section::where('letter', $letter)->first();
+
+         $UserGradeSection = new UserGradeSection;
+         if($user->role == 'student'){
+             $UserGradeSection->student_id = $user->id;
+             $UserGradeSection-> grade_section_id= $grade->sections()->where('section_id', $section->id)->first()->id;
+        
+        $UserGradeSection->grade_section_id;
+        $UserGradeSection->save();
+        
+            }
+
+            else if($user->role == 'teacher'){
+                $UserGradeSection->teacher_id= $user->id;
+                $subject = $request-> input('subject');
+                $course= course::where('subject', $subject)->first();
+                $UserGradeSection->grade_section_id= $grade->sections()->where('section_id', $section->id)->first()->id;
+                $UserGradeSection->grade_section_id;
+                $UserGradeSection-> course_id=$course->id;
+                $UserGradeSection-> course_id;
+                $UserGradeSection->save();
+            }
+            $user->save();
+/////////////////////////////////////////////////////////////////////////////////////////
+
+
         $token=$user->createToken('tokenss')->plainTextToken;
 
         return response()->json([
             'message'=>'DONE!',
              'token'=>$token,
+             'grade_section'=> $UserGradeSection,
         ]);
     }
-
-     //add new course
-    //  public function addCourse(Request $request){
-    //     $course= new course;
-    //     $subject=$request->input('subject');
-      
-
-    //     $course->subject=$subject;
-    //     $course->save();
-
-    //     return response()->json([
-    //         'message'=>'Course created'
-    //     ]);
-    // }
 
 
     //delete user
@@ -104,6 +132,19 @@ class UserController extends Controller
 
     }
     
+     //get all teachers
+     public function getTeacher(){
+        $role = "teacher";
+        $users = Userlms::where('role', $role)->get();
+        return response()->json(['users' => $users]);
+    }
+
+    //get all students
+    public function getStudents(){
+        $role = "student";
+        $users = Userlms::where('role', $role)->get();
+        return response()->json(['users' => $users]);
+    }
 
     //get user by name
     public function getUserByName($firstName){
@@ -145,6 +186,8 @@ class UserController extends Controller
     //     ]);
     // }
 
+
+
     //login
     public function login(Request $request){
         $fields=$request->validate([
@@ -175,4 +218,7 @@ public function logout(Request $request){
 
     return response()->json([ 'message'=> 'Logged out Successfully!!']);
 }
+
+
+
 }

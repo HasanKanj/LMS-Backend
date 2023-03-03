@@ -16,8 +16,11 @@ class grade_section extends Pivot
         'capacity',
         ];
  
-        public function attendence(){
-            return $this->hasMany(Attendence::class,'grade_section_id');
+        public function attendance(){
+            return $this->hasMany(attendance::class, 'grade_sections_id');
+           }
+           public function userGradeSection(){
+         $this->hasMany(UserGradeSection::class ,'grade_sections_id');
         }
 
 }

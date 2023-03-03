@@ -4,7 +4,9 @@ use App\Http\Controllers\SectionController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\GradeController;
+use App\Http\Controllers\AttendanceController;
+use App\Http\Controllers\GradeSectionController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -15,32 +17,54 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
  */
+
+ //public
+ ///////////////sanctum auth ///////////////
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-///////////////sanctum auth ///////////////
 //login
 Route::post('/user/login',[UserController::class,'login']);
+
 //logout
 Route::group(['middleware' => ['auth:sanctum']], function () {
+    // Route::post('/user',[UserController::class,'addUser']);
+    // Route::put('/user/{id}',[UserController::class,'updateUser']);
+    // Route::delete('/user/{id}',[UserController::class,'deleteUser']);
     Route::post('/user/logout',[UserController::class,'logout']);
     });
 
-    
+
+///////////        USER            ///////
 Route::get('/allUser',[UserController::class,'getAllUsers']);
 Route::get('/user/{id}',[UserController::class,'getUserById']);
-
-//register
-// Route::post('/register',[UserController::class,'register']);
-
 Route::post('/user',[UserController::class,'addUser']);
-////////
-Route::put('/user/{id}',[UserController::class,'updateUser']);
+// Route::put('/user/{id}',[UserController::class,'updateUser']);
 Route::delete('/user/{id}',[UserController::class,'deleteUser']);
 Route::get('/teacher',[UserController::class,'getTeacher']);
 Route::get('/student',[UserController::class,'getStudents']);
 Route::get('/userss/{firstName}',[UserController::class,'getUserByName']);
+
+    
+
+
+/*******Grade ****/
+Route::get('/grade/{id}',[GradeController::class,'getGradeById']);
+Route::get('/grade',[GradeController::class,'getGrade']);
+Route::post('/grade',[GradeController::class,'addGrade']);
+Route::delete('/grade/{id}',[GradeController::class,'deleteGrade']);
+Route::put('/grade/{id}',[GradeController::class,'updateGrade']);
+
+
+
+Route::get('/gradeSection/{id}',[GradeSectionController::class,'getGradeSectionById']);
+Route::post('/gradeSection',[GradeSectionController::class,'addGradeSection']);
+Route::delete('/gradeSection/{id}',[GradeSectionController::class,'deleteGradeSection']);
+Route::patch('/gradeSection/{id}',[GradeSectionController::class,'updateGradeSection']);
+
+
+
 
 
 /**********Attendance */

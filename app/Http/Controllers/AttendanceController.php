@@ -67,6 +67,4 @@ class AttendanceController extends Controller
             'data'=>$gradeSectioId,200
         ]);
     }
-    
-
 }

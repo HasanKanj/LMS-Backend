@@ -18,7 +18,7 @@ class course extends Model
         return $this->hasMany(UserGradeSection::class);
     }
 
-    public function users(){
-        return $this->hasMany(userlms::class, 'user_grade_sections', 'courses', 'userlms_id', 'courses_id');
-    }
+    // public function users(){
+    //     return $this->hasMany(userlms::class, 'user_grade_sections', 'courses', 'userlms_id', 'courses_id');
+    // }
 }

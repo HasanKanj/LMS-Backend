@@ -15,11 +15,11 @@ class attendance extends Model
     ];
 
     public function Student(){
-        return $this->belongsTo(userlms::class);
+        return $this->belongsTo(userlms::class,  'studentId','id');
     }
 
     public function gradeSection(){
-        return $this->belongsTo(grade_section::class);
+        return $this->belongsTo(grade_section::class,  'gradeSectionId','id');
     }
 
 }

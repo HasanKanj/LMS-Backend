@@ -8,8 +8,25 @@ use Illuminate\Routing\Controller;
 
 class CourseController extends Controller
 {
+   public function index()
+   {
+    $courses=Course::with('UserGradeSection.teacher')->get();
+    $uniqueTeachersByCourse = Course::with('UserGradeSection.teacher')
+    ->get()
+    ->map(function ($course) {
+        return [
+            'subject' => $course->subject,
+            'teachers' => $course->UserGradeSection->map(function($section){
+                return $section;
+            })->unique('teacher_id')->pluck('teacher')
+         ];
+    });
+    return response(['data'=>$uniqueTeachersByCourse]);
+   }
 
 
+
+    
     //Create a course
     public function createCourse(Request $request)
     {

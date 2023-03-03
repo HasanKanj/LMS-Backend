@@ -7,22 +7,22 @@ use Illuminate\Database\Eloquent\Model;
 use illuminate\Database\Eloquent\Relations\Pivot;
 use AjCastro\EagerLoadPivotRelations\EagerLoadPivotTrait;
 
-class UserGradeSection extends Pivot
+class UserGradeSection extends  Model
 {
     use HasFactory;
     use EagerLoadPivotTrait;
 
     protected $table = 'user_grade_sections';
 
-    // public function student(){
+    public function student(){
 
-    //     return $this->belongsTo(User::class)->where(['role' => 'student']);
-    // }
+        return $this->belongsTo(userlms::class)->where(['role' => 'student']);
+    }
 
-    // public function teacher(){
+    public function teacher(){
 
-    //     return $this->belongsTo(User::class)->where(['role' => 'teacher']);
-    // }
+        return $this->belongsTo(userlms::class)->where(['role' => 'teacher']);
+    }
 
     public function users(){
         return $this->belongsTo(userlms::class, 'user_grade_sections_id');

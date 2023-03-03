@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GradeController;
 use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\GradeSectionController;
+use App\Http\Controllers\CourseController;
+use App\Http\Controllers\UserGradeSectionController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -87,3 +89,8 @@ Route::Get('/section/{id}', [SectionController::class, 'getSingleSection']);
 Route::Post('/addsection', [SectionController::class, 'addSection']);
 Route::Patch('/updatesection/{id}', [SectionController::class, 'updateSection']);
 Route::Delete('/section/{id}', [SectionController::class, 'deleteSection']);
+
+
+
+/****scdknvc */
+Route::get('/user-grade-section',[CourseController::class,'index']);

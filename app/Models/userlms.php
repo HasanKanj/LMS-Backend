@@ -36,4 +36,8 @@ class userlms extends Model
     public function grades(){
         return $this->belongsToMany(grade::class, 'user_grade_sections' , 'userlms_id', 'grade_section_id');
     }
+
+    // public function userGradeSection(){
+    //     return $this->hasMany(UserGradeSection::class);
+    // }
 }

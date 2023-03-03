@@ -52,7 +52,7 @@ class AttendanceController extends Controller
 
     /*****Get student's attendance by id  */
     public function getByStudent($id){
-        $studentAttendance= attendance::where('studentId','=',$id)->get();
+        $studentAttendance= attendance::where('studentId','=',$id)->with('Student')->get();
         return response()->json([
             'message'=>'All the Attendance for one student',
             'data'=>$studentAttendance,200,
@@ -61,7 +61,7 @@ class AttendanceController extends Controller
  
       /*****Get gradeSection's attendance by id  */
     public function getByGradeSectionId($id){
-        $gradeSectioId= attendance::where('gradeSectionId','=',$id)->get();
+        $gradeSectioId= attendance::where('gradeSectionId','=',$id)->with('gradeSection')->get();
         return response()->json([
             'message'=>'All the Attendance for GradeSection',
             'data'=>$gradeSectioId,200

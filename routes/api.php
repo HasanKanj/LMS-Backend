@@ -81,6 +81,7 @@ Route::post('/course',[CourseController::class,'createCourse']);
 Route::get('/course/getAll',[CourseController::class,'getAllCourses']);
 Route::get('/course/{id}',[CourseController::class,'getCourse']);
 Route::delete('deleteById/{id}',[CourseController::class,'deleteById']);
+Route::get('/user-grade-section',[CourseController::class,'index']);
 
 
 /*******Section ****/
@@ -92,5 +93,3 @@ Route::Delete('/section/{id}', [SectionController::class, 'deleteSection']);
 
 
 
-/****scdknvc */
-Route::get('/user-grade-section',[CourseController::class,'index']);

@@ -30,7 +30,7 @@ class UserController extends Controller
             ]);
         }
     
-    //add new user(teacher)
+    //add new user
     public function addUser(Request $request){
         $user= new userlms;
 
@@ -84,7 +84,7 @@ class UserController extends Controller
                 $UserGradeSection-> course_id;
                 $UserGradeSection->save();
             }
-            $user->save();
+        
 /////////////////////////////////////////////////////////////////////////////////////////
 
 

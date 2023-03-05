@@ -31,24 +31,21 @@ Route::post('/user/login',[UserController::class,'login']);
 
 //logout
 Route::group(['middleware' => ['auth:sanctum']], function () {
-    // Route::post('/user',[UserController::class,'addUser']);
-    // Route::put('/user/{id}',[UserController::class,'updateUser']);
-    // Route::delete('/user/{id}',[UserController::class,'deleteUser']);
+    Route::post('/user',[UserController::class,'addUser']);
+    Route::put('/user/{id}',[UserController::class,'updateUser']);
+    Route::delete('/user/{id}',[UserController::class,'deleteUser']);
     Route::post('/user/logout',[UserController::class,'logout']);
     });
-
 
 ///////////        USER            ///////
 Route::get('/allUser',[UserController::class,'getAllUsers']);
 Route::get('/user/{id}',[UserController::class,'getUserById']);
-Route::post('/user',[UserController::class,'addUser']);
+// Route::post('/user',[UserController::class,'addUser']);
 // Route::put('/user/{id}',[UserController::class,'updateUser']);
-Route::delete('/user/{id}',[UserController::class,'deleteUser']);
+// Route::delete('/user/{id}',[UserController::class,'deleteUser']);
 Route::get('/teacher',[UserController::class,'getTeacher']);
 Route::get('/student',[UserController::class,'getStudents']);
 Route::get('/userss/{firstName}',[UserController::class,'getUserByName']);
-
-    
 
 
 /*******Grade ****/

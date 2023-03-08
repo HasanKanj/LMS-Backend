@@ -43,7 +43,7 @@ class AttendanceController extends Controller
 
     /********* Get All Attendance */
     public function getAll(Request $request) {
-        $attendance = attendance::all();
+        $attendance = attendance::with('Student','gradeSection')->get();
         return response()->json([
             'message'=> "All the attendences",
             'data'=>$attendance, 200

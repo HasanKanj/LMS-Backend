@@ -16,6 +16,7 @@ class CourseController extends Controller
     ->map(function ($course) {
         return [
             'subject' => $course->subject,
+            'id'=>$course->id,
             'teachers' => $course->UserGradeSection->map(function($section){
                 return $section;
             })->unique('teacher_id')->pluck('teacher')

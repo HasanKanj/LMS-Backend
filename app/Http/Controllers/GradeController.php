@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\Log;
+
 use App\Models\userlms;
 use App\Models\course;
 use App\Models\grade;
@@ -54,8 +56,12 @@ class GradeController extends Controller
         ]);
 
         $grade = grade::create($request->only('name')); // Create the new level using only the levelName field from the request
+        log::info($grade);
+        log::info($request->input('sectionIds[0]'));
+        $section = section::where('letter',$request->input('sectionIds[0]'))->first();
 
-        $grade->sections()->attach($request->input('sectionIds'), ['capacity' => $request->input('capacity')]); // Associate the sections with the new level using the attach method, with the capacity field set to the provided value
+        log::info($section);
+        $grade->sections()->attach($section, ['capacity' => $request->input('capacity')]); // Associate the sections with the new level using the attach method, with the capacity field set to the provided value
 
         return $grade;
     }

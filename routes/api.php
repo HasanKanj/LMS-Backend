@@ -56,14 +56,10 @@ Route::delete('/grade/{id}',[GradeController::class,'deleteGrade']);
 Route::put('/grade/{id}',[GradeController::class,'updateGrade']);
 
 
-
-Route::get('/gradeSection/{id}',[GradeSectionController::class,'getGradeSectionById']);
-Route::post('/gradeSection',[GradeSectionController::class,'addGradeSection']);
-Route::delete('/gradeSection/{id}',[GradeSectionController::class,'deleteGradeSection']);
-Route::patch('/gradeSection/{id}',[GradeSectionController::class,'updateGradeSection']);
-
-
-
+// Route::get('/gradeSection/{id}',[GradeSectionController::class,'getGradeSectionById']);
+// Route::post('/gradeSection',[GradeSectionController::class,'addGradeSection']);
+// Route::delete('/gradeSection/{id}',[GradeSectionController::class,'deleteGradeSection']);
+// Route::patch('/gradeSection/{id}',[GradeSectionController::class,'updateGradeSection']);
 
 
 /**********Attendance */
@@ -89,4 +85,5 @@ Route::Patch('/updatesection/{id}', [SectionController::class, 'updateSection'])
 Route::Delete('/section/{id}', [SectionController::class, 'deleteSection']);
 
 
-
+/****Get students from grade section */
+Route::Get('/allStudent/{gradeName}{sectionName}',[SectionController::class,'studentList']);

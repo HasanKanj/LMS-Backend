@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\section;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class SectionController extends Controller
 {
@@ -90,4 +91,14 @@ class SectionController extends Controller
         ]);
     }
 
+    public function studentList($gradeName, $sectionName)
+    {
+        $students = DB::table('userlms')->join('user_grade_sections', 'userlms.id', '=', 'user_grade_sections.student_id')
+         ->join('grade_sections', 'user_grade_sections.grade_section_id', '=', 'grade_sections.id')
+        ->join('grades', 'grade_sections.grade_id', '=', 'grades.id')
+    ->join('sections', 'grade_sections.section_id', '=', 'sections.id')
+    ->where('grades.name', '=', $gradeName)->where('sections.letter', '=', $sectionName)->select('userlms.*')->get();
+    
+        return response()->json($students);
+    }
 }

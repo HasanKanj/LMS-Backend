@@ -45,7 +45,7 @@ Route::get('/user/{id}', [UserController::class, 'getUserById']);
 // Route::delete('/user/{id}',[UserController::class,'deleteUser']);
 Route::get('/teacher', [UserController::class, 'getTeacher']);
 Route::get('/student', [UserController::class, 'getStudents']);
-Route::get('/user/{role}', [UserController::class, 'getUserCountByRole']);
+Route::get('/users/{role}', [UserController::class, 'getUserCountByRole']);
 Route::get('/userss/{firstName}', [UserController::class, 'getUserByName']);
 
 /*******Grade ****/

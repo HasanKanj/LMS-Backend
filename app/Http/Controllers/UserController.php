@@ -157,7 +157,7 @@ class UserController extends Controller
         } elseif ($role === 'teacher') {
             return response()->json(['total_teachers' => $count]);
         } else {
-            return response()->json(['message' => 'Invalid role']);
+            return response()->json(['message' => 'Invalid Role']);
         }
     }
 

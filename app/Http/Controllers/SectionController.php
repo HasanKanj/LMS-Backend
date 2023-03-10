@@ -91,13 +91,11 @@ class SectionController extends Controller
         ]);
     }
 
-    public function studentList($gradeName, $sectionName)
+    public function studentList($gradeId, $sectionId)
     {
         $students = DB::table('userlms')->join('user_grade_sections', 'userlms.id', '=', 'user_grade_sections.student_id')
          ->join('grade_sections', 'user_grade_sections.grade_section_id', '=', 'grade_sections.id')
-        ->join('grades', 'grade_sections.grade_id', '=', 'grades.id')
-    ->join('sections', 'grade_sections.section_id', '=', 'sections.id')
-    ->where('grades.name', '=', $gradeName)->where('sections.letter', '=', $sectionName)->select('userlms.*')->get();
+    ->where('grade_sections.section_id', '=', $sectionId)->where('grade_sections.grade_id', '=', $gradeId)->select('userlms.*')->get();
     
         return response()->json($students);
     }

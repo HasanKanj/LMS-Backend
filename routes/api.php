@@ -1,5 +1,9 @@
 <?php
 
+use App\Http\Controllers\AttendanceController;
+use App\Http\Controllers\CourseController;
+use App\Http\Controllers\GradeController;
+use App\Http\Controllers\GradeSectionController;
 use App\Http\Controllers\SectionController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
@@ -32,24 +36,29 @@ Route::post('/user/login', [UserController::class, 'login']);
 
 // logout
 Route::group(['middleware' => ['auth:sanctum']], function () {
-     Route::post('/user',[UserController::class,'addUser']);
-    Route::put('/user/{id}',[UserController::class,'updateUser']);
-    Route::delete('/user/{id}',[UserController::class,'deleteUser']);
-    Route::post('/user/logout',[UserController::class,'logout']);
-    });
+    Route::post('/user', [UserController::class, 'addUser']);
+    Route::put('/user/{id}', [UserController::class, 'updateUser']);
+    Route::delete('/user/{id}', [UserController::class, 'deleteUser']);
+    Route::post('/user/logout', [UserController::class, 'logout']);
+});
 
 ///////////        USER            ///////
 Route::get('/allUser', [UserController::class, 'getAllUsers']);
 Route::get('/user/{id}', [UserController::class, 'getUserById']);
-Route::post('/user', [UserController::class, 'addUser']);
-Route::put('/user/{id}', [UserController::class, 'updateUser']);
-Route::delete('/user/{id}', [UserController::class, 'deleteUser']);
+// Route::post('/user',[UserController::class,'addUser']);
+// Route::put('/user/{id}',[UserController::class,'updateUser']);
+// Route::delete('/user/{id}',[UserController::class,'deleteUser']);
 Route::get('/teacher', [UserController::class, 'getTeacher']);
 Route::get('/student', [UserController::class, 'getStudents']);
+Route::get('/users/{role}', [UserController::class, 'getUserCountByRole']);
 Route::get('/userss/{firstName}', [UserController::class, 'getUserByName']);
 
-
 /*******Grade ****/
+Route::get('/grade/{id}', [GradeController::class, 'getGradeById']);
+Route::get('/grade', [GradeController::class, 'getGrade']);
+Route::post('/grade', [GradeController::class, 'addGrade']);
+Route::delete('/grade/{id}', [GradeController::class, 'deleteGrade']);
+Route::put('/grade/{id}', [GradeController::class, 'updateGrade']);
 Route::get('/grade/{id}', [GradeController::class, 'getGradeById']);
 Route::get('/grade', [GradeController::class, 'getGrade']);
 Route::post('/grade', [GradeController::class, 'addGrade']);

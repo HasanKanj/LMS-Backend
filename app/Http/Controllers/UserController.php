@@ -100,11 +100,14 @@ class UserController extends Controller
 
     //delete user
     public function deleteUser(Request $request, $id){
-        $user= userlms::find($id);
+        $user = userlms::find($id);
+        if (!$user) {
+            return response()->json(['message' => 'Grade not found.'], 404);
+        }
         $user->delete();
 
         return response()->json([
-            'message'=>'DONE! User deleted'
+            'message' => 'DONE! User deleted'
         ]);
 
     }

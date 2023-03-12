@@ -8,11 +8,11 @@ use App\Http\Controllers\SectionController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\GradeController;
-use App\Http\Controllers\AttendanceController;
-use App\Http\Controllers\GradeSectionController;
-use App\Http\Controllers\CourseController;
-use App\Http\Controllers\UserGradeSectionController;
+// use App\Http\Controllers\GradeController;
+// use App\Http\Controllers\AttendanceController;
+// use App\Http\Controllers\GradeSectionController;
+// use App\Http\Controllers\CourseController;
+// use App\Http\Controllers\UserGradeSectionController;
 
 /*
 |--------------------------------------------------------------------------

@@ -91,6 +91,7 @@ class SectionController extends Controller
         ]);
     }
 
+    ///grade/section
     public function studentList($gradeId, $sectionId)
     {
         $students = DB::table('userlms')->join('user_grade_sections', 'userlms.id', '=', 'user_grade_sections.student_id')

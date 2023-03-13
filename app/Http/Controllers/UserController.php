@@ -90,7 +90,6 @@ class UserController extends Controller
         }
 
         log::info($section);
-
 /////////////////////////////////////////////////////////////////////////////////////////
 
         $token = $user->createToken('tokenss')->plainTextToken;

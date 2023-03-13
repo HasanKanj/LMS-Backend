@@ -6,9 +6,12 @@ use App\Models\course;
 use App\Models\grade;
 use App\Models\section;
 use App\Models\UserGradeSection;
+use App\Models\grade_section;
 use App\Models\userlms;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
+
 
 class UserController extends Controller
 {
@@ -34,6 +37,7 @@ class UserController extends Controller
     public function addUser(Request $request)
     {
         $user = new userlms;
+
 
         $request->validate([
             'firstName' => 'required',
@@ -68,9 +72,10 @@ class UserController extends Controller
         $UserGradeSection = new UserGradeSection;
         if ($user->role == 'student') {
             $UserGradeSection->student_id = $user->id;
-            $UserGradeSection->grade_section_id = $grade->sections()->where('section_id', $section->id)->first()->id;
+            // $UserGradeSection->grade_section_id = $grade->sections()->where('section_id', $section->id)->first()->id;
+            $UserGradeSection->grade_section_id = grade_section::where('section_id', $section->id)->where('grade_id',$grade->id)->first()->id;
 
-            $UserGradeSection->grade_section_id;
+            // $UserGradeSection->grade_section_id;
             $UserGradeSection->save();
 
         } else if ($user->role == 'teacher') {
@@ -80,9 +85,11 @@ class UserController extends Controller
             $UserGradeSection->grade_section_id = $grade->sections()->where('section_id', $section->id)->first()->id;
             $UserGradeSection->grade_section_id;
             $UserGradeSection->course_id = $course->id;
-            $UserGradeSection->course_id;
+            // $UserGradeSection->course_id;
             $UserGradeSection->save();
         }
+
+        log::info($section);
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -141,13 +148,18 @@ class UserController extends Controller
         return response()->json(['users' => $users]);
     }
 
-    //get all students
+   // get all students
     public function getStudents()
     {
         $role = "student";
         $users = Userlms::where('role', $role)->get();
+       
         return response()->json(['users' => $users]);
     }
+
+
+
+ 
 
     public function getUserCountByRole($role)
     {

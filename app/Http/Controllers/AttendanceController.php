@@ -16,22 +16,36 @@ class AttendanceController extends Controller
     public function createAttendance(Request $request,$id){
         
         $student=UserGradeSection::where('student_id',$id)->first();
+        $attendance=null;
+
         if(! $student){
             return response()->json([
                 'message'=>'No such student_id',
-                
+                'data'=>$attendance
             ]);
     
         } else{
         $grade_section_id=$student->grade_section_id;
-    
-        $attendance=new Attendance;
-        $attendance->gradeSectionId=$grade_section_id;
-        $attendance->studentId=$id;
-        $attendance->status=$request->status;
-        $attendance->date=Carbon::now();
 
-        $attendance->save();
+        $attendance=attendance::where(['studentId'=>$id])->latest()->first();
+        if ($attendance && Carbon::now()->format('Y-m-d')== $attendance->date){
+            return response()->json([
+                'message'=>'Attendance already taken',
+                'data'=>$attendance
+                
+            ]);
+
+                   
+        }else{
+            $attendance=new attendance;
+            $attendance->gradeSectionId=$grade_section_id;
+            $attendance->studentId=$id;
+            $attendance->status=$request->status;
+            $attendance->date=Carbon::now();
+    
+            $attendance->save();
+        }
+       
         return response()->json([
             'message'=>'attendance is created succesfully',
             'data'=>$attendance,

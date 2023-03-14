@@ -81,9 +81,12 @@ class UserController extends Controller
         } else if ($user->role == 'teacher') {
             $UserGradeSection->teacher_id = $user->id;
             $subject = $request->input('subject');
+            
             $course = course::where('subject', $subject)->first();
-            $UserGradeSection->grade_section_id = $grade->sections()->where('section_id', $section->id)->first()->id;
-            $UserGradeSection->grade_section_id;
+            // $UserGradeSection->grade_section_id = $grade->sections()->where('section_id', $section->id)->first()->id;
+            $UserGradeSection->grade_section_id = grade_section::where('section_id', $section->id)->where('grade_id',$grade->id)->first()->id;
+
+            // $UserGradeSection->grade_section_id;
             $UserGradeSection->course_id = $course->id;
             // $UserGradeSection->course_id;
             $UserGradeSection->save();

@@ -8,6 +8,7 @@ use App\Models\UserGradeSection;
 use Illuminate\Support\Facades\Log;
 use Carbon\Carbon;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\DB;
 
 class AttendanceController extends Controller
 {
@@ -81,4 +82,15 @@ class AttendanceController extends Controller
             'data'=>$gradeSectioId,200
         ]);
     }
+
+
+/******By section id and grade id */
+
+public function getAttendeesByGradeidSectionid($gradeid,$sectionid){
+    $attendees=DB::table('attendances')->join('grade_sections','grade_sections.id','=','attendances.gradeSectionId')
+    ->where('grade_sections.section_id','=',$sectionid)->where('grade_sections.grade_id','=',$gradeid)->select('attendances.*')->get();
+
+    return response()->json($attendees); 
+}
+
 }

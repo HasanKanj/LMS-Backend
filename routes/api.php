@@ -93,3 +93,8 @@ Route::Delete('/section/{id}', [SectionController::class, 'deleteSection']);
 
 /****Get students from grade section */
 Route::Get('/allStudent/{gradeId}/{sectionId}',[SectionController::class,'studentList']);
+
+
+
+/*******Attendance by grade id and section id */
+Route::Get('/attendance/{gradeId}/{sectionId}',[AttendanceController::class,'getAttendeesByGradeidSectionid']);

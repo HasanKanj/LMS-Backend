@@ -98,6 +98,12 @@ class SectionController extends Controller
          ->join('grade_sections', 'user_grade_sections.grade_section_id', '=', 'grade_sections.id')
     ->where('grade_sections.section_id', '=', $sectionId)->where('grade_sections.grade_id', '=', $gradeId)->select('userlms.*')->get();
     
+    if(count($students)==0){
+        return response()->json([
+            'message' => 'No students found',
+        ], 404);
+    }
         return response()->json($students);
     }
 }
+

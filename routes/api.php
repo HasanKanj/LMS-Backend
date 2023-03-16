@@ -73,6 +73,7 @@ Route::post('/attendance/{id}', [AttendanceController::class, 'createAttendance'
 Route::get('/attendance', [AttendanceController::class, 'getAll']);
 Route::get('/attendance/student/{id}', [AttendanceController::class, 'getByStudent']);
 Route::get('/attendance/gradeSection/{id}', [AttendanceController::class, 'getByGradeSectionId']);
+Route::get('/attendance/status/{grade_section_id}', [AttendanceController::class, 'getAttendanceCountBystatus']);
 
 
 /*********Course */

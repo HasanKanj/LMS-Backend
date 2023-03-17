@@ -99,3 +99,8 @@ Route::Get('/allStudent/{gradeId}/{sectionId}',[SectionController::class,'studen
 
 /*******Attendance by grade id and section id */
 Route::Get('/attendance/{gradeId}/{sectionId}',[AttendanceController::class,'getAttendeesByGradeidSectionid']);
+
+
+
+/****New grade section with given section and grade */
+Route::Post('/newGradesection/{gradeId}/{sectionId}',[GradeController::class,'newGradesection']);

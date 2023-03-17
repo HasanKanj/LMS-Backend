@@ -96,9 +96,8 @@ class GradeController extends Controller
         return response()->json([
             'message' => 'grade updated successfully',]);
     }
-
-
-    ////*****Adding a new section grade with a pre saved grade and section */
+    
+      ////*****Adding a new section grade with a pre saved grade and section */
 
     public function newGradesection (Request $request,$gradeId,$sectionId ){
 

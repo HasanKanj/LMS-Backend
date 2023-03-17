@@ -43,25 +43,28 @@ class GradeController extends Controller
     }
 
 
-
     //add new grade
-    public function addGrade(Request $request)
-    {
+    public function addGrade(Request $request){
+    $request->validate([
+        'name' => 'required',
+        'sectionIds' => 'array', // Ensure section IDs are provided in an array format
+        'sectionIds.*' => 'exists:sections,id', // Ensure each section ID exists in the sections table
+        'capacity' => 'integer|nullable', // Add a capacity field that is optional and must be an integer
+    ]);
 
-        $request->validate([
-            'name' => 'required',
-            'sectionIds' => 'array', // Ensure section IDs are provided in an array format
-            'sectionIds.*' => 'exists:sections,id', // Ensure each section ID exists in the sections table
-            'capacity' => 'integer|nullable', // Add a capacity field that is optional and must be an integer
-        ]);
-    
-        $grade = grade::create($request->only('name')); // Create the new level using only the levelName field from the request
-    
-        $grade->sections()->attach($request->input('sectionIds'), ['capacity' => $request->input('capacity')]); // Associate the sections with the new level using the attach method, with the capacity field set to the provided value
-      
-     
-        return $grade; // Return the newly created level with its associated sections
+    // Check if a grade with the given name already exists
+    $grade = grade::where('name', $request->input('name'))->first();
+
+    if ($grade) {
+        // If the grade already exists, attach the new sections to it
+        $grade->sections()->attach($request->input('sectionIds'), ['capacity' => $request->input('capacity')]);
+    } else {
+        // If the grade does not exist, create a new grade with the provided sections
+        $grade = grade::create($request->only('name'));
+        $grade->sections()->attach($request->input('sectionIds'), ['capacity' => $request->input('capacity')]);
     }
+    return $grade;
+}
 
 
     //delete grade
